@@ -1,0 +1,1056 @@
+/* =========================
+   Fonts
+   ========================= */
+@import url("https://fonts.googleapis.com/css2?family=Abel&display=swap");
+
+/* =========================
+   Prevent first-load flashing (but keep animations)
+   ========================= */
+html.js:not(.is-ready) .reveal-with-socials,
+html.js:not(.is-ready) .socials a,
+html.js:not(.is-ready) #type-your,
+html.js:not(.is-ready) #type-name,
+html.js:not(.is-ready) .hero__headline {
+  opacity: 0 !important;
+  transform: translateY(14px) !important;
+  pointer-events: none !important;
+}
+
+/* =========================
+   Design tokens
+   ========================= */
+:root {
+  --bg: #14171a;
+  --text: #f2f2f2;
+  --muted: #8a8a8a;
+  --accent: #e38b3a;
+  --line: rgba(255, 255, 255, 0.08);
+
+  --max: 1100px;
+
+  --radius: 14px;
+  --panel: rgba(255, 255, 255, 0.05);
+  --panel-2: rgba(255, 255, 255, 0.07);
+
+  /* animation easing */
+  --bounce-ease: cubic-bezier(.22, 1.2, .36, 1);
+  --float-ease: cubic-bezier(.45, 0, .55, 1);
+
+  /* Card shadows */
+  --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+  --card-shadow-hover: 0 10px 28px rgba(0, 0, 0, 0.20);
+}
+
+/* Keep layout from shifting when scrollbar appears */
+html { scrollbar-gutter: stable; }
+body { overflow-y: scroll; }
+
+/* =========================
+   Base / Reset
+   ========================= */
+* { box-sizing: border-box; }
+
+html {
+  height: 100%;
+  font-size: 18px;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Abel", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+
+a:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.25);
+  outline-offset: 3px;
+  border-radius: 0px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* =========================
+   Accent text
+   ========================= */
+.accent{
+  color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition: opacity 160ms ease;
+}
+
+.accent:hover{
+  opacity: 0.75;
+}
+
+.page {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 48px 22px 64px;
+}
+
+/* =========================
+   Hero
+   ========================= */
+.hero {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 36px;
+  align-items: end;
+  min-height: 96px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero__name {
+  font-size: clamp(48px, 6vw, 72px);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  min-height: 2.1em;
+}
+
+.hero__home {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+
+.hero__home:hover {
+  opacity: 0.9;
+}
+
+.hero__first,
+.hero__last {
+  display: block;
+}
+
+.hero__name > .type-slot {
+  display: block;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 100%;
+}
+
+/* swap positions */
+.hero__headline { order: 2; }
+.socials { order: 1; }
+
+.hero__headline {
+  width: 100%;
+  margin: 0;
+  text-align: right;
+  font-size: clamp(24px, 1.4vw, 20px);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1;
+   opacity: .75;
+
+  /* headline wrapping rules for per-letter spans */
+  word-break: normal;
+  overflow-wrap: normal;
+}
+
+/* =========================
+   Type slot + ghost text
+   ========================= */
+.type-slot {
+  display: block;
+  position: relative;
+  white-space: nowrap;
+}
+
+.type-slot::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* =========================
+   Links (if you re-enable them)
+   ========================= */
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+}
+
+.link {
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.03));
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  transition: transform .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: linear-gradient(180deg, var(--panel-2), rgba(255, 255, 255, 0.04));
+}
+
+.link:active { transform: translateY(0); }
+
+/* =========================
+   Sections
+   ========================= */
+.section { padding-top: 28px; }
+
+.section__title {
+  margin-bottom: 18px;
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Projects title: animate AFTER cards */
+.section__title-late{
+  opacity: 0;
+  transform: translateY(16px);
+  will-change: transform, opacity;
+}
+
+.section__title-late.in{
+  animation: heroLineIn 420ms var(--float-ease) both; /* re-use your keyframes */
+}
+
+/* Reveal Animation (containers) */
+.reveal-with-socials {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+.reveal-with-socials.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* =========================
+   Work rail
+   ========================= */
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 320px);
+  gap: 26px;
+  overflow-x: auto;
+  padding: 10px 2px 26px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.rail::-webkit-scrollbar { height: 10px; }
+.rail::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+}
+.rail::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+}
+
+/* =========================
+   Cards
+   ========================= */
+.card {
+  scroll-snap-align: start;
+  perspective: 900px;
+  overflow: visible;
+
+  /* default = dark */
+  --card-text: #f2f2f2;
+  --card-text-hover: #ffffff;
+}
+
+.card--light {
+  --card-text: #111;
+  --card-text-hover: #000;
+}
+
+.card--dark {
+  --card-text: #f2f2f2;
+  --card-text-hover: #ffffff;
+}
+
+.card__inner {
+  position: relative;
+  display: block;
+  height: 360px;
+  border-radius: 0;
+  overflow: hidden;
+  background: #0b0b0b;
+
+  /* remove border, use subtle shadow instead */
+  border: none;
+  box-shadow: var(--card-shadow);
+
+  transform-style: preserve-3d;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, box-shadow;
+
+  transition:
+    transform 220ms cubic-bezier(.22, 1, .36, 1),
+    box-shadow 220ms ease;
+}
+
+/* Faster snap-back on mouse leave */
+.card__inner:not(:hover) { transition-duration: 180ms; }
+
+/* Lift + slightly stronger shadow on hover */
+.card__inner:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+.card__inner:active {
+  transform: translateY(-2px);
+  transition-duration: 120ms;
+}
+
+.card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  will-change: transform;
+
+  transition: transform 420ms cubic-bezier(.18, 1.25, .32, 1);
+  transform-origin: center 55%;
+}
+
+/* “Alive” image grow on hover */
+.card__inner:hover .card__img {
+  transform: translateZ(0) scale(1.04);
+}
+
+/* Card label (top-left) */
+.card__label {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 2;
+
+  display: inline-flex;
+  align-items: flex-start;
+  line-height: 1.2;
+
+  font-size: 1rem;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  color: var(--card-text);
+
+  transition:
+    transform 260ms cubic-bezier(.22, 1, .36, 1),
+    color 200ms ease;
+}
+
+.card__label::before {
+  content: "";
+  width: 3px;
+  height: 0.9em;
+  margin-right: 10px;
+  margin-top: 0.15em; /* aligns with first text line */
+  flex-shrink: 0;
+
+  background: currentColor;
+  opacity: 0.35;
+}
+
+.card__inner:hover .card__label {
+  transform: translateY(-4px);
+  color: var(--card-text-hover);
+}
+
+.card__inner:hover .card__label::before { opacity: 0.7; }
+
+
+
+/* =========================
+   Hero staged intro
+   ========================= */
+
+/* keep hidden until triggered */
+html.js #type-your,
+html.js #type-name,
+html.js .hero__headline{
+  opacity: 0;
+  transform: translateY(16px);
+  will-change: transform, opacity;
+}
+
+/* trigger animation */
+.intro-line-in{
+  animation: heroLineIn 420ms var(--float-ease) both;
+}
+
+/* Make PEARCEY slightly heavier/slower */
+#type-name.intro-line-in{
+  animation-duration: 460ms;
+}
+
+@keyframes heroLineIn{
+  0%   { opacity: 0; transform: translateY(16px); }
+  70%  { opacity: 1; transform: translateY(-3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================
+   Card reveal animation
+   ========================= */
+@keyframes cardIn {
+  0%   { opacity: 0; transform: translateY(18px) scale(.985); }
+  60%  { opacity: 1; transform: translateY(-8px) scale(1.012); }
+  82%  { opacity: 1; transform: translateY(3px)  scale(.998); }
+  100% { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* initial hidden state */
+.reveal-card {
+  opacity: 0;
+  transform: translateY(18px) scale(.985);
+  will-change: transform, opacity;
+}
+
+/* trigger when section reveals */
+.reveal-with-socials.show .reveal-card {
+  animation: cardIn 760ms var(--float-ease) both;
+}
+
+/* stagger timing */
+.reveal-with-socials.show .reveal-card:nth-child(1) { animation-delay: 0ms; }
+.reveal-with-socials.show .reveal-card:nth-child(2) { animation-delay: 90ms; }
+.reveal-with-socials.show .reveal-card:nth-child(3) { animation-delay: 180ms; }
+.reveal-with-socials.show .reveal-card:nth-child(4) { animation-delay: 270ms; }
+.reveal-with-socials.show .reveal-card:nth-child(5) { animation-delay: 360ms; }
+.reveal-with-socials.show .reveal-card:nth-child(6) { animation-delay: 450ms; }
+.reveal-with-socials.show .reveal-card:nth-child(7) { animation-delay: 540ms; }
+.reveal-with-socials.show .reveal-card:nth-child(8) { animation-delay: 630ms; }
+
+
+/* =========================
+   Experiments list (if you re-add it)
+   ========================= */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.04));
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+.list__item + .list__item { border-top: 1px solid var(--line); }
+
+.list__link {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 14px 16px;
+  transition: background .15s ease;
+}
+
+.list__link:hover { background: rgba(255, 255, 255, 0.06); }
+
+.list__name {
+  font-weight: 650;
+  color: var(--text);
+}
+
+.list__meta {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: right;
+}
+
+/* =========================
+   Footer
+   ========================= */
+.footer {
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* =========================
+   Socials
+   ========================= */
+.socials {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 18px;
+}
+
+/* base icon button */
+.socials a {
+  position: relative;
+  z-index: 0;
+  width: 38px;
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--muted);
+  font-size: 18px;
+
+  /* hidden until reveal */
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+
+  transition: color 200ms ease, transform 150ms ease;
+}
+
+/* circle background */
+.socials a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  z-index: -1;
+
+  background: var(--text);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.socials a:hover {
+  color: var(--bg);
+  transform: translateY(-1px);
+}
+
+.socials a:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.socials a:active { transform: scale(1.05); }
+
+/* envelope icon default */
+.socials a i.fa-envelope,
+.socials a i.fa-envelope-open,
+.socials a i.fa-envelope-open-text {
+  color: var(--accent);
+}
+
+/* envelope icon hover — return to normal hover colour */
+.socials a:hover i.fa-envelope,
+.socials a:hover i.fa-envelope-open,
+.socials a:hover i.fa-envelope-open-text {
+  color: var(--bg);
+}
+
+/* reveal animation */
+@keyframes iconIn {
+  0%   { opacity: 0;   transform: translateY(14px) scale(.98); }
+  55%  { opacity: 1;   transform: translateY(-6px) scale(1.03); }
+  80%  { opacity: .9;  transform: translateY(2px)  scale(.995); }
+  100% { opacity: 1;  transform: translateY(0)    scale(1); }
+}
+
+.socials.show a {
+  pointer-events: auto;
+  animation: iconIn 620ms var(--float-ease) forwards;
+}
+
+.socials.show a:nth-child(1) { animation-delay: 0ms; }
+.socials.show a:nth-child(2) { animation-delay: 90ms; }
+.socials.show a:nth-child(3) { animation-delay: 180ms; }
+.socials.show a:nth-child(4) { animation-delay: 270ms; }
+.socials.show a:nth-child(5) { animation-delay: 360ms; }
+.socials.show a:nth-child(6) { animation-delay: 450ms; }
+
+
+/* =========================
+   Per-letter hover grow
+   ========================= */
+.char {
+  display: inline-block;
+  transform-origin: 50% 70%;
+  transition: transform 140ms ease;
+  will-change: transform;
+}
+
+.hero__name .char:hover { transform: scale(1.35); }
+
+/* Fixed spacing ONLY for the big name */
+.hero__name .char--space {
+  display: inline-block;
+  width: 0.35em;
+}
+
+/* Headline space behavior */
+.hero__headline .char { white-space: pre; }
+.hero__headline .char--space {
+  display: inline;
+  width: auto;
+}
+
+/* =========================
+   Responsive (mobile)
+   ========================= */
+@media (max-width: 780px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    min-height: auto;
+    padding-bottom: 14px;
+  }
+
+  .hero__name {
+    font-size: clamp(46px, 10vw, 62px);
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 0.9;
+    min-height: 0;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .hero__name > .type-slot { display: inline; }
+
+  .hero__content {
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+  }
+
+  .hero__headline {
+    text-align: center;
+    transform: translateY(0) !important;
+    line-height: 1.2;
+    white-space: normal;
+    margin-top: -2px;
+    font-size: clamp(16px, 4.2vw, 18px);
+  }
+
+  .socials {
+    order: 2;
+    justify-content: center;
+    margin-top: 6px;
+  }
+
+  .list__link {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .list__meta { text-align: left; }
+}
+
+/* =========================
+   Reduced motion
+   ========================= */
+@media (prefers-reduced-motion: reduce) {
+  .hero__home,
+  .hero__headline{
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+
+  .socials.show a,
+  .reveal-with-socials.show .reveal-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .section__title-late{
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* =========================
+   Disable animations when requested
+   ========================= */
+
+.no-animations *{
+  animation: none !important;
+}
+
+/* (No animations): force socials visible */
+.no-animations .socials a{
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+}
+
+/* (No animations): keep the per-letter hover smoothing on pages without animations*/
+.no-animations .char{
+  transition: transform 140ms ease !important;
+}
+
+/* =========================
+   About Overlay (full-screen)
+   ========================= */
+
+.about-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.about-overlay.is-open{
+  pointer-events: auto;
+  opacity: 1;
+}
+
+/* Expanding background (card grows from center) */
+.about-overlay__bg{
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: var(--about-w, 320px);
+  height: var(--about-h, 360px);
+  background: var(--about-overlay-bg, #14171a);
+
+  transform-origin: center center;
+  transform: translate3d(0,0,0) scale(1);
+
+  will-change: transform;
+  transition: transform 480ms var(--float-ease);
+  pointer-events: none; /* never catch clicks */
+  z-index: 0;
+}
+
+/* slower ONLY when closing */
+.about-overlay.is-closing .about-overlay__bg{
+  transition-duration: 620ms;
+}
+
+/* Layout wrapper */
+.about-overlay__content{
+  position: absolute;
+  inset: 0;
+
+  display: grid;
+  justify-items: center;
+  align-items: start;
+
+  padding-top: clamp(80px, 12vh, 140px);
+
+  position: relative;
+  z-index: 2; /* above bg */
+}
+
+/* Prevent background scroll */
+body.is-locked{
+  overflow: hidden;
+}
+
+/* -------------------------
+   Inner layout (DESKTOP)
+   Title left, polaroid under it, body right
+   ------------------------- */
+.about-overlay__inner{
+  width: min(50vw, 820px);
+  max-width: calc(100vw - 44px);
+
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) 1fr; /* was 260–340 */
+  grid-template-rows: auto auto;
+  gap: 28px;
+  align-items: start;
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+.about-overlay.is-open .about-overlay__inner{
+  opacity: 1;
+  transform: translateY(clamp(6px, 1.2vh, 14px));
+  transition-delay: 260ms;
+}
+
+.about-overlay.is-closing .about-overlay__inner{
+  opacity: 0;
+  transform: translateY(18px);
+  transition-delay: 0ms !important;
+}
+
+/* Lock the title row height so the polaroid always aligns */
+.about-overlay__inner{
+  /* overrides your auto/auto rows */
+  grid-template-rows: var(--about-title-row-h, 180px) auto;
+}
+
+/* Make the title-row fill that locked track */
+.about-overlay__title-row{
+  height: 100%;
+  min-height: 0; /* prevents it from growing the track */
+  align-content: start;
+}
+
+/* -------------------------
+   Title row + back button
+   ------------------------- */
+.about-overlay__title-row{
+  grid-column: 1;
+  grid-row: 1;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 22px;
+  row-gap: 10px;
+  align-items: start;
+}
+
+/* Lock title block height so the polaroid always starts at the same Y */
+.about-overlay__title-row{
+  min-height: 170px; /* tweak 150–190 until it matches perfectly */
+  align-content: start;
+}
+
+/* Back button */
+.about-overlay__back{
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 8px;
+
+  color: var(--about-overlay-text, var(--bg));
+  font-size: 32px;
+  line-height: 1;
+
+  cursor: pointer;
+  pointer-events: auto;
+
+  transition: transform 140ms ease, opacity 140ms ease;
+  position: relative;
+  z-index: 3;
+}
+
+.about-overlay__back:hover{ opacity: 0.7; }
+.about-overlay__back:hover i{ transform: translateX(-3px); }
+.about-overlay__back i{ transition: transform 160ms ease; }
+.about-overlay__back:active{ transform: translateX(-4px); }
+
+/* Arrow exits with overlay */
+.about-overlay.is-closing .about-overlay__back{
+  transform: translateX(calc(-1 * min(25vw, 410px)));
+  opacity: 0;
+  transition-delay: 80ms;
+  transition: transform 420ms var(--float-ease), opacity 260ms ease;
+}
+
+/* Title */
+.about-overlay__title{
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+
+  font-size: clamp(36px, 4.2vw, 52px);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 0.98;
+  text-transform: uppercase;
+
+  color: var(--about-overlay-text, var(--bg));
+
+  opacity: 0;
+  transform: translateX(-18px);
+  transition: opacity 360ms ease, transform 360ms ease;
+}
+
+.about-overlay.is-open .about-overlay__title{
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 300ms;
+}
+
+.about-overlay.is-closing .about-overlay__title{
+  opacity: 0;
+  transform: translateX(-18px);
+  transition-delay: 0ms !important;
+}
+
+/* Optional link icon */
+.about-overlay__title.has-link-icon::after{
+  content: "\f08e";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+
+  margin-left: 0.35em;
+  font-size: 0.7em;
+  opacity: 0.38;
+  vertical-align: 0.08em;
+  transition: opacity 200ms ease;
+}
+.about-overlay__title.has-link-icon:hover::after{ opacity: 0.75; }
+
+/* Meta */
+.about-overlay__meta{
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+
+  color: var(--about-overlay-text, var(--bg));
+  opacity: 0.9;
+
+  white-space: nowrap;      /* stops wrapping (main fix) */
+  overflow: hidden;
+  text-overflow: ellipsis;  /* safety if it ever gets too long */
+}
+
+/* -------------------------
+   Polaroid (under title, left)
+   ------------------------- */
+.about-overlay__polaroid{
+  grid-column: 1;
+  grid-row: 2;
+
+  justify-self: start;
+   align-self: start;
+  margin-top: -24px; 
+
+  width: clamp(180px, 22vw, 280px);
+  height: auto;
+
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.10));
+  transform: translateX(-14px) scale(0.98);
+  opacity: 0;
+
+  will-change: transform, opacity;
+  transition: opacity 360ms ease, transform 360ms var(--float-ease);
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.about-overlay__polaroid.is-hidden{ display: none; }
+
+.about-overlay.is-open .about-overlay__polaroid{
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  transition-delay: 460ms;
+}
+
+.about-overlay.is-closing .about-overlay__polaroid{
+  opacity: 0;
+  transform: translateX(-14px) scale(0.98);
+}
+
+/* -------------------------
+   Body (right side)
+   ------------------------- */
+.about-overlay__body{
+  grid-column: 2;
+  grid-row: 1 / span 2;
+
+  font-size: clamp(18px, 1.25vw, 22px);
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  color: var(--about-overlay-text, var(--bg));
+
+  opacity: 0;
+  transform: translateX(18px);
+  transition: opacity 360ms ease, transform 360ms ease;
+}
+
+.about-overlay__body p{
+  margin: 0 0 18px;
+  max-width: 42ch;
+  line-height: 1.55;
+}
+
+.about-overlay.is-open .about-overlay__body{
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 360ms;
+}
+
+.about-overlay.is-closing .about-overlay__body{
+  opacity: 0;
+  transform: translateX(18px);
+  transition-delay: 0ms !important;
+}
+
+/* -------------------------
+   Mobile
+   ------------------------- */
+@media (max-width: 780px){
+  .about-overlay__inner{
+    width: min(86vw, 680px);
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 16px;
+  }
+
+  .about-overlay__title-row{
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .about-overlay__polaroid{
+    grid-column: 1;
+    grid-row: 2;
+    width: min(70vw, 320px);
+    margin-top: 12px;
+  }
+
+  .about-overlay__body{
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .about-overlay__title{
+    letter-spacing: 0.12em;
+  }
+}
