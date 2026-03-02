@@ -785,6 +785,18 @@ body.is-locked{
   overflow: hidden;
 }
 
+/* Allow scrolling INSIDE the overlay when content is taller than the viewport */
+.about-overlay.is-open{
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Ensure the content area can grow and provide space at bottom */
+.about-overlay__content{
+  min-height: 100vh;
+  padding-bottom: clamp(40px, 8vh, 90px);
+}
+
 /* -------------------------
    Inner layout (DESKTOP)
    Title left, polaroid under it, body right
