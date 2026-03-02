@@ -1049,7 +1049,7 @@ body.is-locked{
    
   /* reduce top offset of overlay content */
   .about-overlay__content{
-    padding-top: 48px;   /* try 40–60px to taste */
+    padding-top: 60px;   /* try 40–60px to taste */
   }
    
   .about-overlay__title-row{
