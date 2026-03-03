@@ -963,6 +963,11 @@ body.is-locked{
   text-overflow: ellipsis;  /* safety if it ever gets too long */
 }
 
+/* Overlay Link */
+.about-overlay__title.has-link-icon {
+  cursor: pointer;
+}
+
 /* -------------------------
    Polaroid (under title, left)
    ------------------------- */
